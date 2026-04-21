@@ -1,3 +1,4 @@
+require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const compression = require('compression');
@@ -21,7 +22,8 @@ mongoose.connect(dbURI).catch((err) => {
   }
 });
 
-const redisClient = redis.createClient({ url: process.env.REDIS_URL || 'redis://127.0.0.1:6379' });
+const redisClient = redis.createClient({ url: process.env.REDISCLOUD_URL || 'redis://127.0.0.1:6379' });
+redisClient.on('error', (err) => console.log('Redis error:', err));
 redisClient.connect().catch(console.error);
 
 const app = express();
